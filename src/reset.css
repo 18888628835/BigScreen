@@ -1,3 +1,12 @@
+/* 以下为 common 代码 */
+:root {
+  font-size: calc(1vw + 1vh + 0.5vmin); /*  35.4px */
+  --title-fz: 0.564972rem;
+  --second-title-fz: 0.39548rem;
+  --main-fz: 0.338983rem;
+}
+
+/* 以下为 reset 代码 */
 * {
   margin: 0;
   padding: 0;
@@ -29,6 +38,8 @@ button {
 ol,
 ul {
   list-style: none;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 table {
   border-collapse: collapse;

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Index from './components';
+import React from 'react';
+import Index from './pages';
 
 function App() {
   return (
