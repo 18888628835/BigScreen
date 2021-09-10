@@ -6,25 +6,45 @@ const Wrap = styled.section`
   padding-left: 1.129944rem;
   > div {
     border: 1px solid red;
-    flex: 1;
   }
-  .top {
-    border: 1px solid white;
-  }
-  .title_right {
-    color: rgba(64, 205, 241, 0.4);
-    > ul {
+  .top_content {
+    height: 100%;
+    color: #ffffffbf;
+    font-size: var(--main-fz);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -16px;
+    .content_item {
+      flex: 1;
       display: flex;
       align-items: center;
+      margin-bottom: 0.451977rem;
+      background: rgba(0, 22, 56, 0.9);
+      box-shadow: inset 0px 0px 8px rgba(49, 218, 255, 0.5);
     }
-    li {
-      font-size: var(--second-title-fz);
-      margin-right: 0.451977rem;
-      padding-bottom: 0.169492rem;
-    }
-    .active {
-      color: #3dd7ff;
-      border-bottom: 2px solid currentColor;
+    .icon_wrap {
+      padding-top: 0.451977rem;
+      padding-bottom: 0.451977rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .top {
+        margin-bottom: 0.225989rem;
+        > span:nth-child(1) {
+          color: #3dd7ff;
+          font-weight: bold;
+          font-size: 0.79096rem;
+        }
+        > .last:nth-child(1) {
+          color: #ff9c4b;
+        }
+      }
+
+      img {
+        width: 0.75113rem;
+      }
     }
   }
 `;

@@ -2,12 +2,18 @@ import styled from 'styled-components';
 
 export const Wrap = styled.section`
   text-align: center;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: url('/bg.png');
+  background-image: url('/bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-position: center 0;
   > header {
     margin-bottom: 1.073446rem;
+    margin-top: 0.282486rem;
     > span {
       background: linear-gradient(180deg, #ffffff 30.77%, #2688d6 90.38%);
       -webkit-background-clip: text;

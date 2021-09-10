@@ -1,5 +1,7 @@
 /* 以下为 common 代码 */
 :root {
+  width: 100%;
+  height: 100%;
   font-size: calc(1vw + 1vh + 0.5vmin); /*  35.4px */
   --title-fz: 0.564972rem;
   --second-title-fz: 0.39548rem;
@@ -25,6 +27,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
 }
 
 a {
@@ -57,4 +61,11 @@ img {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+#root {
+  width: 100%;
+  height: 100%;
+}
+.App {
+  height: 100%;
 }
