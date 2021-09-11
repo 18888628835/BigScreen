@@ -1,4 +1,4 @@
-import Wrap from '@/css/css_left';
+import Wrap from '@/pages/left/css';
 import React from 'react';
 import Bottom from './components/Bottom';
 import Middle from './components/Middle';

@@ -25,7 +25,6 @@ export const Wrap = styled.section`
 export const Main = styled.main`
   display: flex;
   flex: 1;
-  border: 1px solid black;
   > section {
     flex: 1;
   }

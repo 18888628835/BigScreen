@@ -1,7 +1,6 @@
 import Container from '@/components/container';
 import React, { RefObject, useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import Wrap from '@/css/css_middle';
 
 const Middle = () => {
   const chartRef = useRef<any>(null);
@@ -236,6 +235,7 @@ const Middle = () => {
   useEffect(() => {
     createCharts([], chartRef.current);
   }, []);
+
   return (
     <Container
       text='建设进度'
@@ -246,7 +246,7 @@ const Middle = () => {
         </ul>
       }
     >
-      <Wrap ref={chartRef}></Wrap>
+      <div className='middle_content' ref={chartRef}></div>
     </Container>
   );
 };

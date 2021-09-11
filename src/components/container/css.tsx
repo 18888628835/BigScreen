@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Wrap = styled.div`
   &.container {
-    border: 1px solid white;
     padding: 0.451977rem;
     background: #001536;
     display: flex;

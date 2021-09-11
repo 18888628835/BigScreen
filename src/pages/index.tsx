@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrap, Main } from '@/css/css_index';
+import { Wrap, Main } from '@/pages/css';
 import Left from './left/Left';
 import Middle from './middle/Middle';
 import Right from './right/Right';
