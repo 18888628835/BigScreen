@@ -1,13 +1,8 @@
 import Container from '@/components/container';
 import React from 'react';
 import { ScrollBoard } from '@jiaminghi/data-view-react';
-import styled from 'styled-components';
-const NScrollBoard = styled(ScrollBoard)`
-  width: 100%;
-  height: 100%;
-  flex: 1;
-`;
-const Bottom = () => {
+
+const BLeft = () => {
   const config = {
     header: ['排名', '州市', '评分'],
     columnWidth: [50],
@@ -31,11 +26,11 @@ const Bottom = () => {
 
   return (
     <Container text='州市目标责任制考核'>
-      <div className='bottom_content'>
-        <NScrollBoard config={config} />
+      <div className='bottom_left_content'>
+        <ScrollBoard config={config} />
       </div>
     </Container>
   );
 };
 
-export default Bottom;
+export default BLeft;

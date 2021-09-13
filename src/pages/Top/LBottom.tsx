@@ -1,8 +1,8 @@
 import Container from '@/components/container';
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 
-const Middle = () => {
+const LBottom = () => {
   const chartRef = useRef<any>(null);
   const createCharts = (data, chartDom) => {
     let banqian = [12, 58, 64, 64, 64, 25];
@@ -251,4 +251,4 @@ const Middle = () => {
   );
 };
 
-export default Middle;
+export default LBottom;

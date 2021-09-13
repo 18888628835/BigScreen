@@ -10,7 +10,7 @@ const Wrap = styled.div`
   }
   .title {
     color: white;
-    line-height: 1.045198rem;
+    line-height: 1.4;
     font-size: var(--title-fz);
     font-weight: 500;
     text-shadow: 1px 1px 8px rgba(49, 218, 255, 0.75);

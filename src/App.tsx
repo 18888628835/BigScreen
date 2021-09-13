@@ -1,10 +1,10 @@
 import React from 'react';
-import Index from './pages';
+import Layout from './pages/Layout';
 
 function App() {
   return (
     <div className='App'>
-      <Index />
+      <Layout />
     </div>
   );
 }

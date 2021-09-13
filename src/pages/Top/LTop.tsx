@@ -4,7 +4,7 @@ import Vector1 from '@/assets/Vector1.png';
 import Vector2 from '@/assets/Vector2.png';
 import Vector3 from '@/assets/Vector3.png';
 
-const Top = () => {
+const LTop = () => {
   return (
     <Container
       text='规划安置'
@@ -107,4 +107,4 @@ const Top = () => {
   );
 };
 
-export default Top;
+export default LTop;

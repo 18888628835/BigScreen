@@ -4,6 +4,8 @@ const Wrap = styled.div`
   &.container {
     padding: 0.451977rem;
     background: #001536;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -26,6 +28,8 @@ const Wrap = styled.div`
   .content {
     margin-top: 0.338983rem;
     flex: 1;
+    width: 100%;
+    height: 100%;
   }
 `;
 export default Wrap;
