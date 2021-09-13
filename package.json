@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@jiaminghi/charts": "^0.2.18",
     "@jiaminghi/data-view-react": "^1.2.5",
     "antd": "^4.16.13",
     "echarts": "^5.2.0",

@@ -30,7 +30,6 @@ export const Main = styled.main`
   padding-right: 1.129944rem;
   > section {
     flex: 1;
-    border: 1px solid red;
   }
   > section:nth-child(1) {
     flex: 3;
@@ -40,21 +39,21 @@ export const Main = styled.main`
     display: flex;
     > div {
       flex: 1;
-      border: 1px solid red;
     }
+    /* 上中 */
     .middle {
-      flex: 1.5;
+      flex: 1.8;
     }
+    /* 上左 */
     .left {
       display: flex;
       flex-direction: column;
-
       > div {
         flex: 1;
       }
+      /* 左上 */
       .l_top {
         flex: 1.2;
-        border: 1px solid white;
         .top_content {
           height: 100%;
           color: #ffffffbf;
@@ -98,10 +97,77 @@ export const Main = styled.main`
           }
         }
       }
+      /* 左下 */
       .l_bottom {
         .middle_content {
           height: 100%;
         }
+      }
+    }
+    /* 上右 */
+    .right {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.338983rem;
+      border: 1px solid red;
+      > div {
+        flex: 1;
+      }
+      .right_top_content {
+        height: 100%;
+        color: rgba(255, 255, 255, 0.75);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .content_top {
+          display: flex;
+          flex: 1;
+          justify-content: space-around;
+          align-items: center;
+          > div {
+            display: flex;
+            flex-direction: column;
+            > div:nth-child(2) > span {
+              font-size: 0.79096rem;
+              line-height: 1.016949rem;
+              color: #3dd7ff;
+              letter-spacing: 0.05em;
+              font-weight: bold;
+            }
+          }
+        }
+        .content_line {
+          background: linear-gradient(
+            270deg,
+            rgba(64, 205, 241, 0) 0%,
+            #40cdf1 56.74%,
+            rgba(64, 205, 241, 0) 97.67%
+          );
+          height: 2px;
+          width: 100%;
+          margin-bottom: 0.564972rem;
+        }
+        .content_bottom {
+          flex: 1.2;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          .circle {
+            display: flex;
+            flex: 1;
+            height: 100%;
+            flex-direction: column;
+            > div {
+              flex: 1;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+      .right_bottom_content {
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -110,7 +176,6 @@ export const Main = styled.main`
     display: flex;
     > div {
       flex: 1;
-      border: 1px solid red;
       width: 100%;
     }
     .dv-scroll-board {
@@ -122,6 +187,7 @@ export const Main = styled.main`
     .row-item {
       font-size: inherit;
     }
+    /* 左下 */
     .b_left {
       .bottom_left_content {
         width: 100%;
@@ -150,6 +216,7 @@ export const Main = styled.main`
         }
       }
     }
+    /* 左中 */
     .b_middle {
       flex: 1.5;
       height: 100%;

@@ -5,6 +5,8 @@ import BLeft from './Bottom/BLeft';
 import LTop from './Top/LTop';
 import LBottom from './Top/LBottom';
 import BRight from './Bottom/BRight';
+import RTop from './Top/RTop';
+import RBottom from './Top/RBottom';
 
 const Layout = () => {
   return (
@@ -23,7 +25,14 @@ const Layout = () => {
             </div>
           </div>
           <div className='middle'></div>
-          <div className='right'></div>
+          <div className='right'>
+            <div className='r_top'>
+              <RTop />
+            </div>
+            <div className='r_bottom'>
+              <RBottom />
+            </div>
+          </div>
         </section>
         <section className='bottom'>
           <div className='b_left'>
