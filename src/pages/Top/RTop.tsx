@@ -22,9 +22,9 @@ const RTop = () => {
           },
         },
       ],
-      backgroundColor: '#111',
+      backgroundColor: 'rgba(0, 21, 54, 0.9)',
       polar: {
-        radius: ['65%', '82%'],
+        radius: ['55%', '70%'],
         center: ['50%', '50%'],
       },
       angleAxis: {
@@ -116,15 +116,11 @@ const RTop = () => {
           </div>
           <div className='circle'>
             <span>直补资金发放率</span>
-            <div className='chart2' ref={chart2}>
-              quanquan
-            </div>
+            <div className='chart2' ref={chart2}></div>
           </div>
           <div className='circle'>
             <span>直补资金发放率</span>
-            <div className='chart3' ref={chart3}>
-              quanquan
-            </div>
+            <div className='chart3' ref={chart3}></div>
           </div>
         </div>
       </div>

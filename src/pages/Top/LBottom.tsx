@@ -4,66 +4,124 @@ import * as echarts from 'echarts';
 
 const LBottom = () => {
   const chartRef = useRef<any>(null);
-  const createCharts = (data, chartDom) => {
-    let banqian = [12, 58, 64, 64, 64, 25];
-    let anzhi = [39, 78, 64, 100, 24, 35];
-    let xData = ['白鹤滩', '托巴', '乌东德', '溪洛渡', '向家坝', '小湾'];
-    let barWidth = 14;
-
+  const createCharts = (xdata, banqianData, shengchanData, chartDom) => {
+    const CubeLeft = echarts.graphic.extendShape({
+      shape: {
+        x: 0,
+        y: 0,
+      },
+      buildPath: function (ctx: any, shape) {
+        const xAxisPoint = shape.xAxisPoint;
+        const c0 = [shape.x + 7, shape.y];
+        const c1 = [shape.x - 10, shape.y];
+        const c2 = [xAxisPoint[0] - 10, xAxisPoint[1]];
+        const c3 = [xAxisPoint[0] + 7, xAxisPoint[1]];
+        ctx
+          .moveTo(c0[0], c0[1])
+          .lineTo(c1[0], c1[1])
+          .lineTo(c2[0], c2[1])
+          .lineTo(c3[0], c3[1])
+          .closePath();
+      },
+    });
+    // 绘制右侧面
+    const CubeRight = echarts.graphic.extendShape({
+      shape: {
+        x: 0,
+        y: 0,
+      },
+      buildPath: function (ctx: any, shape) {
+        const xAxisPoint = shape.xAxisPoint;
+        const c1 = [shape.x + 7, shape.y];
+        const c2 = [xAxisPoint[0] + 7, xAxisPoint[1]];
+        const c3 = [xAxisPoint[0] + 15, xAxisPoint[1] - 10];
+        const c4 = [shape.x + 15, shape.y - 10];
+        ctx
+          .moveTo(c1[0], c1[1])
+          .lineTo(c2[0], c2[1])
+          .lineTo(c3[0], c3[1])
+          .lineTo(c4[0], c4[1])
+          .closePath();
+      },
+    });
+    // 绘制顶面
+    const CubeTop = echarts.graphic.extendShape({
+      shape: {
+        x: 0,
+        y: 0,
+      },
+      buildPath: function (ctx: any, shape) {
+        const c1 = [shape.x + 7, shape.y];
+        const c2 = [shape.x + 15, shape.y - 10]; //右点
+        const c3 = [shape.x - 2, shape.y - 10];
+        const c4 = [shape.x - 10, shape.y];
+        ctx
+          .moveTo(c1[0], c1[1])
+          .lineTo(c2[0], c2[1])
+          .lineTo(c3[0], c3[1])
+          .lineTo(c4[0], c4[1])
+          .closePath();
+      },
+    });
+    // 注册三个面图形
+    echarts.graphic.registerShape('CubeLeft', CubeLeft);
+    echarts.graphic.registerShape('CubeRight', CubeRight);
+    echarts.graphic.registerShape('CubeTop', CubeTop);
     const option = {
-      backgroundColor: '#010d3a',
-      //提示框
+      backgroundColor: 'rgb(2,35,75)',
       tooltip: {
         trigger: 'axis',
-        formatter: function (params) {
-          let str = `${'搬迁安置协议签订率'}:${
-            params[0].value
-          }<br/>${'生产安置协议签订率'}:${params[params.length - 1].value}`;
-          return str;
-        },
         axisPointer: {
-          // 坐标轴指示器，坐标轴触发有效
-          type: 'shadow', // 默认为直线，可选为：'line' | 'shadow',
+          type: 'shadow',
         },
       },
-      /**区域位置*/
       grid: {
-        left: '10%',
-        right: '0%',
-        top: '10%',
-        bottom: '10%',
+        left: '0',
+        right: '5%',
+        top: '8%',
+        bottom: '0',
+        containLabel: true,
       },
-      //X轴
+      legend: {
+        data: ['1', '2'],
+        show: true,
+      },
+      // x 坐标
       xAxis: {
-        data: xData,
         type: 'category',
+        data: xdata,
+        // 坐标线条
         axisLine: {
           show: true,
           lineStyle: {
-            color: 'rgba(255,255,255,1)',
-            shadowColor: 'rgba(255,255,255,1)',
-            shadowOffsetX: '20',
+            color: 'rgba(255, 255, 255, 0.2)',
           },
-          symbol: ['none', 'arrow'],
-          symbolOffset: [0, 25],
         },
-        splitLine: {
-          show: false,
-        },
+        // 标志位
         axisTick: {
           show: false,
+          length: 9,
+          alignWithLabel: true,
+          lineStyle: {
+            color: '#7DFFFD',
+          },
         },
+        // x 坐标的文字标注的颜色
         axisLabel: {
-          margin: 5,
-          fontSize: 10,
+          fontSize: 12,
+          color: 'white',
         },
       },
       yAxis: {
-        show: true,
-        splitNumber: 4,
+        type: 'value',
+        min: 0,
         axisLine: {
           show: true,
+          lineStyle: {
+            color: 'rgba(255, 255, 255, 0.2)',
+          },
         },
+        // 分割线
         splitLine: {
           show: true,
           lineStyle: {
@@ -72,154 +130,186 @@ const LBottom = () => {
           },
         },
         axisLabel: {
-          color: '#FFFFFF',
-          margin: 5,
-          fontSize: 10,
+          fontSize: 12,
+          color: 'white',
           formatter: '{value}%',
         },
+        boundaryGap: ['20%', '20%'],
       },
       series: [
         {
-          name: '男',
-          type: 'bar',
-          barWidth: barWidth,
-          data: banqian,
-          barGap: 0,
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(
-                0,
-                1,
-                0,
-                0,
-                [
-                  {
-                    offset: 0,
-                    color: '#2D52D7', // 0% 处的颜色
+          type: 'custom',
+          name: '搬迁安置协议签订率',
+          renderItem: (params, api) => {
+            let cubeLeftStyle = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#59A6DC',
+              },
+              {
+                offset: 1,
+                color: '#2D52D7',
+              },
+            ]);
+            let cubeRightStyle = new echarts.graphic.LinearGradient(
+              0,
+              0,
+              0,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: '#4EA4E0',
+                },
+                {
+                  offset: 1,
+                  color: '#2445B8',
+                },
+              ]
+            );
+            let cubeTopStyle = {
+              color: '#4E9CD3',
+            };
+            var location = api.coord([api.value(0), api.value(1)]);
+            location = [location[0] - 15, location[1]];
+            var location1 = api.coord([api.value(0), 0]);
+            location1 = [location1[0] - 15, location1[1]];
+            return {
+              type: 'group',
+              children: [
+                {
+                  type: 'CubeLeft',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
                   },
-                  {
-                    offset: 1,
-                    color: '#59A6DC', // 100% 处的颜色
+                  style: {
+                    fill: cubeLeftStyle,
                   },
-                ],
-                false
-              ),
-            },
+                },
+                {
+                  type: 'CubeRight',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
+                  },
+                  style: {
+                    fill: cubeRightStyle,
+                  },
+                },
+                {
+                  type: 'CubeTop',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
+                  },
+                  style: {
+                    fill: cubeTopStyle,
+                  },
+                },
+              ],
+            };
           },
+          data: banqianData,
         },
         {
-          z: 2,
-          type: 'bar',
-          barGap: 0,
-          barWidth: barWidth / 3,
-          data: banqian.map(item => item + 4),
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(
-                0,
-                1,
-                0,
-                0,
-                [
-                  {
-                    offset: 1,
-                    color: '#4EA4E0', // 0% 处的颜色
+          type: 'custom',
+          name: '生产安置协议签订率',
+          renderItem: (params, api) => {
+            let cubeLeftStyle = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              {
+                offset: 0,
+                color: '#0DF5D6',
+              },
+              {
+                offset: 1,
+                color: '#019ABB ',
+              },
+            ]);
+            let cubeRightStyle = new echarts.graphic.LinearGradient(
+              0,
+              0,
+              0,
+              1,
+              [
+                {
+                  offset: 0,
+                  color: '#08E8C9',
+                },
+                {
+                  offset: 1,
+                  color: '#008CA9',
+                },
+              ]
+            );
+            let cubeTopStyle = {
+              color: '#0DEED4',
+            };
+            var location = api.coord([api.value(0), api.value(1)]);
+            location = [location[0] + 15, location[1]];
+            var location1 = api.coord([api.value(0), 0]);
+            location1 = [location1[0] + 15, location1[1]];
+            return {
+              type: 'group',
+              children: [
+                {
+                  type: 'CubeLeft',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
                   },
-                  {
-                    offset: 0,
-                    color: '#2445B8', // 100% 处的颜色
+                  style: {
+                    fill: cubeLeftStyle,
                   },
-                ],
-                false
-              ),
-            },
+                },
+                {
+                  type: 'CubeRight',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
+                  },
+                  style: {
+                    fill: cubeRightStyle,
+                  },
+                },
+                {
+                  type: 'CubeTop',
+                  shape: {
+                    api,
+                    xValue: api.value(0),
+                    yValue: api.value(1),
+                    x: location[0],
+                    y: location[1],
+                    xAxisPoint: location1,
+                  },
+                  style: {
+                    fill: cubeTopStyle,
+                  },
+                },
+              ],
+            };
           },
-        },
-        {
-          z: 3,
-          data: banqian,
-          type: 'pictorialBar',
-          symbolPosition: 'end',
-          symbol: 'path://M 0,0 l 120,0 l -30,60 l -120,0 z',
-          symbolSize: [barWidth * 1.3, '7'],
-          symbolOffset: ['-10', '-6'],
-          itemStyle: {
-            borderWidth: 1,
-            borderColor: 'rgba(60, 111, 218, 1)',
-            color: 'rgba(78, 156, 211, 1)',
-          },
-        },
-        // ---------------------分割线---------------------
-        {
-          name: '女',
-          type: 'bar',
-          barWidth: barWidth,
-          data: anzhi,
-          barGap: 0,
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(
-                0,
-                1,
-                0,
-                0,
-                [
-                  {
-                    offset: 1,
-                    color: '#0DF5D6', // 0% 处的颜色
-                  },
-                  {
-                    offset: 0,
-                    color: '#019ABB', // 100% 处的颜色
-                  },
-                ],
-                false
-              ),
-            },
-          },
-        },
-        {
-          z: 2,
-          name: '女',
-          type: 'bar',
-          barGap: 0,
-          barWidth: barWidth / 3,
-          data: anzhi.map(item => item + 4),
-          itemStyle: {
-            normal: {
-              color: new echarts.graphic.LinearGradient(
-                0,
-                1,
-                0,
-                0,
-                [
-                  {
-                    offset: 1,
-                    color: '#0DF5D6', // 0% 处的颜色
-                  },
-                  {
-                    offset: 0,
-                    color: '#019ABB', // 100% 处的颜色
-                  },
-                ],
-                false
-              ),
-            },
-          },
-        },
-        {
-          z: 3,
-          data: anzhi,
-          type: 'pictorialBar',
-          symbolPosition: 'end',
-          symbol: 'path://M 0,0 l 120,0 l -30,60 l -120,0 z',
-          symbolSize: [barWidth * 1.3, '7'],
-          symbolOffset: ['9', '-6'],
-          itemStyle: {
-            borderWidth: 1,
-            borderColor: '029FBD',
-            color: '#0DEED4',
-          },
+          data: shengchanData,
         },
       ],
     };
@@ -233,7 +323,10 @@ const LBottom = () => {
     return myChart;
   };
   useEffect(() => {
-    createCharts([], chartRef.current);
+    let banqian = [1, 2, 4, 3, 5, 6];
+    let shengchan = [1, 2, 4, 3, 5, 6];
+    let xData = ['白鹤滩', '托巴', '乌东德', '溪洛渡', '向家坝', '小湾'];
+    createCharts(xData, banqian, shengchan, chartRef.current);
   }, []);
 
   return (

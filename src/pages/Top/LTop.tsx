@@ -72,30 +72,33 @@ const LTop = () => {
             unit4,
           }) => (
             <div key={text1} className='content_item'>
+              <div className='corner corner1'></div>
+              <div className='corner corner2'></div>
               <div className='icon_wrap'>
-                <div className='top'>
+                <div className='icon_wrap_top'>
                   <img src={img} />
                 </div>
                 <span>{text1}</span>
               </div>
+              <div className='line'></div>
               <div className='icon_wrap'>
-                <div className='top'>
+                <div className='icon_wrap_top'>
                   <span>{number2}</span>
-                  <span>{unit2}</span>
+                  {unit2}
                 </div>
                 <span>{text2}</span>
               </div>
               <div className='icon_wrap'>
-                <div className='top'>
+                <div className='icon_wrap_top'>
                   <span>{number3}</span>
-                  <span>{unit3}</span>
+                  {unit3}
                 </div>
                 <span>{text3}</span>
               </div>
               <div className='icon_wrap'>
-                <div className='top'>
+                <div className='icon_wrap_top'>
                   <span className='last'>{number4}</span>
-                  <span>{unit4}</span>
+                  {unit4}
                 </div>
                 <span>{text4}</span>
               </div>

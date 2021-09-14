@@ -9,18 +9,18 @@ const RBottom = () => {
       '昆明市',
       '玉溪市',
       '曲靖市',
-      '昆明市',
-      '玉溪市',
-      '曲靖市',
-      '昆明市',
-      '玉溪市',
+      '大理白族自治州',
+      '文山壮族苗族自治州',
+      '楚雄彝族自治州',
+      '红河哈尼族彝族自治州',
+      '迪庆藏族自治区',
     ];
     var getValue = [98, 90, 88, 77, 66, 55, 44, 33];
     const option = {
-      backgroundColor: '#003366',
+      backgroundColor: 'rgba(0, 21, 54, 0.9)',
       grid: {
-        left: '20%',
-        right: '8%',
+        left: '38%',
+        right: '5%',
         bottom: '2%',
         top: '2%',
       },
@@ -35,18 +35,60 @@ const RBottom = () => {
       },
       xAxis: {
         show: false,
-        type: 'value',
       },
       yAxis: [
         {
           type: 'category',
           inverse: true,
-          offset: 70,
+          offset: 50,
+          position: 'left',
           axisLabel: {
             show: true,
+            margin: 120,
             align: 'left',
             textStyle: {
               color: '#66cc00',
+              rich: {
+                num: {
+                  color: '#fff',
+                  width: 15,
+                  height: 15,
+                  fontSize: 12,
+                  align: 'center',
+                  borderRadius: 100,
+                },
+                num1: {
+                  color: '#fff',
+                  backgroundColor: '#EE9A3A',
+                  width: 15,
+                  height: 15,
+                  fontSize: 12,
+                  align: 'center',
+                  borderRadius: 100,
+                },
+                num2: {
+                  color: '#fff',
+                  backgroundColor: '#9696A2',
+                  width: 15,
+                  height: 15,
+                  fontSize: 12,
+                  align: 'center',
+                  borderRadius: 100,
+                },
+                num3: {
+                  color: '#fff',
+                  backgroundColor: '#C5816C',
+                  width: 15,
+                  height: 15,
+                  fontSize: 12,
+                  align: 'center',
+                  borderRadius: 100,
+                },
+                title: {
+                  color: 'white',
+                  padding: 10,
+                },
+              },
             },
             formatter: function (value, index) {
               var num = '';
@@ -59,49 +101,9 @@ const RBottom = () => {
               } else if (index === 2) {
                 str = '{num3|' + num + '} {title|' + value + '}';
               } else {
-                str = ' ' + '{num|' + num + '} {title|' + value + '}';
+                str = '{num|' + num + '} {title|' + value + '}';
               }
               return str;
-            },
-            rich: {
-              num: {
-                color: '#fff',
-                width: 20,
-                height: 20,
-                fontSize: 12,
-                align: 'center',
-                borderRadius: 100,
-              },
-              num1: {
-                color: '#fff',
-                backgroundColor: '#EE9A3A',
-                width: 20,
-                height: 20,
-                fontSize: 12,
-                align: 'center',
-                borderRadius: 100,
-              },
-              num2: {
-                color: '#fff',
-                backgroundColor: '#9696A2',
-                width: 20,
-                height: 20,
-                fontSize: 12,
-                align: 'center',
-                borderRadius: 100,
-              },
-              num3: {
-                color: '#fff',
-                backgroundColor: '#C5816C',
-                width: 20,
-                height: 20,
-                fontSize: 12,
-                align: 'center',
-                borderRadius: 100,
-              },
-              title: {
-                color: 'white',
-              },
             },
           },
           splitLine: {
@@ -124,9 +126,9 @@ const RBottom = () => {
           label: {
             show: true,
             position: 'right', // 位置
-            color: 'white',
+            color: 'hsla(192, 100%, 62%, 1)',
             fontSize: 12,
-            distance: 10, // 距离
+            distance: 10, // 字与条形图bar 的距离
             formatter: '{c}', // 这里是数据展示的时候显示的数据
           },
           itemStyle: {
@@ -161,6 +163,11 @@ const RBottom = () => {
   }, []);
   return (
     <Container text='后期扶持绩效评价'>
+      <div className='legend'>
+        <span>排名</span>
+        <span>州市</span>
+        <span>绩效评价</span>
+      </div>
       <div className='right_bottom_content' ref={chart}></div>
     </Container>
   );
