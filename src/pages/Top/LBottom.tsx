@@ -323,8 +323,8 @@ const LBottom = () => {
     return myChart;
   };
   useEffect(() => {
-    let banqian = [1, 2, 4, 3, 5, 6];
-    let shengchan = [1, 2, 4, 3, 5, 6];
+    let banqian = [10, 20, 40, 30, 50, 60];
+    let shengchan = [10, 20, 40, 30, 50, 60].reverse();
     let xData = ['白鹤滩', '托巴', '乌东德', '溪洛渡', '向家坝', '小湾'];
     createCharts(xData, banqian, shengchan, chartRef.current);
   }, []);

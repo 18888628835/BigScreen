@@ -7,6 +7,7 @@ import LBottom from './Top/LBottom';
 import BRight from './Bottom/BRight';
 import RTop from './Top/RTop';
 import RBottom from './Top/RBottom';
+import { Middle } from './Top/Middle';
 
 const Layout = () => {
   return (
@@ -24,7 +25,9 @@ const Layout = () => {
               <LBottom />
             </div>
           </div>
-          <div className='middle'></div>
+          <div className='middle'>
+            <Middle />
+          </div>
           <div className='right'>
             <div className='r_top'>
               <RTop />

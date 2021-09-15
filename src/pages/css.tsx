@@ -34,6 +34,10 @@ export const Main = styled.main`
   > section:nth-child(1) {
     flex: 3;
   }
+  .middle {
+    color: white;
+    border: 1px solid red;
+  }
   /* 上边布局 */
   .top {
     display: flex;
@@ -274,10 +278,11 @@ export const Main = styled.main`
         height: 100%;
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         color: white;
         > a {
-          display: flex;
           flex: 1;
+          display: flex;
           text-align: center;
           align-items: center;
           cursor: pointer;
@@ -288,12 +293,12 @@ export const Main = styled.main`
           margin-right: 0.282486rem;
         }
         p {
+          flex: 4;
           text-align: left;
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
-          flex: 1;
           > div:nth-child(1) {
             font-size: 0.39548rem;
             line-height: 1.4;
