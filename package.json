@@ -11,11 +11,14 @@
     "@jiaminghi/data-view-react": "^1.2.5",
     "antd": "^4.16.13",
     "echarts": "^5.2.0",
+    "jQuery": "^1.7.4",
+    "jquery": "^3.6.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "styled-components": "^5.3.1"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.6",
     "@types/node": "^16.9.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",

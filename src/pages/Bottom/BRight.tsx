@@ -23,34 +23,34 @@ const BRight = () => {
           <div className='img_wrap'>
             <img src={image} alt='' />
           </div>
-          <p>
+          <div className='p'>
             <div>资讯标题</div>
             <div>
               资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容
             </div>
-          </p>
+          </div>
         </a>
         <a>
           <div className='img_wrap'>
             <img src={image} alt='' />
           </div>
-          <p>
+          <div className='p'>
             <div>资讯标题</div>
             <div>
               资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容
             </div>
-          </p>
+          </div>
         </a>
         <a>
           <div className='img_wrap'>
             <img src={image} alt='' />
           </div>
-          <p>
+          <div className='p'>
             <div>资讯标题</div>
             <div>
               资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容资讯内容
             </div>
-          </p>
+          </div>
         </a>
       </div>
     </Container>

@@ -6,7 +6,7 @@ export const Wrap = styled.section`
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-image: url('/bg.png');
+  background-image: url('/bigScreenBG.png');
   background-size: cover;
   background-repeat: no-repeat;
   -webkit-background-size: cover;
@@ -37,6 +37,9 @@ export const Main = styled.main`
   .middle {
     color: white;
     border: 1px solid red;
+    #map {
+      height: 100%;
+    }
   }
   /* 上边布局 */
   .top {
@@ -292,7 +295,7 @@ export const Main = styled.main`
           line-height: 1;
           margin-right: 0.282486rem;
         }
-        p {
+        .p {
           flex: 4;
           text-align: left;
           height: 100%;
