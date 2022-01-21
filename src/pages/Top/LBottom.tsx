@@ -1,315 +1,123 @@
-import Container from '@/components/container';
-import React, { useEffect, useRef } from 'react';
+import Container from '../components/container';
+import React, { useEffect, useRef, useState } from 'react';
 import * as echarts from 'echarts';
 
-const LBottom = () => {
+type LBottomProps = {
+  data: MapDataTypes.BuildProgress[];
+};
+const LBottom = React.memo<LBottomProps>((props) => {
   const chartRef = useRef<any>(null);
+  const [activeIndex, setActiveIndex] = useState(1);
+  const listData = (props.data || []).find((item) => item.type === activeIndex);
   const createCharts = (xdata, banqianData, shengchanData, chartDom) => {
-    const CubeLeft = echarts.graphic.extendShape({
-      shape: {
-        x: 0,
-        y: 0,
-      },
-      buildPath: function (ctx: any, shape) {
-        const xAxisPoint = shape.xAxisPoint;
-        const c0 = [shape.x + 7, shape.y];
-        const c1 = [shape.x - 10, shape.y];
-        const c2 = [xAxisPoint[0] - 10, xAxisPoint[1]];
-        const c3 = [xAxisPoint[0] + 7, xAxisPoint[1]];
-        ctx
-          .moveTo(c0[0], c0[1])
-          .lineTo(c1[0], c1[1])
-          .lineTo(c2[0], c2[1])
-          .lineTo(c3[0], c3[1])
-          .closePath();
-      },
-    });
-    // 绘制右侧面
-    const CubeRight = echarts.graphic.extendShape({
-      shape: {
-        x: 0,
-        y: 0,
-      },
-      buildPath: function (ctx: any, shape) {
-        const xAxisPoint = shape.xAxisPoint;
-        const c1 = [shape.x + 7, shape.y];
-        const c2 = [xAxisPoint[0] + 7, xAxisPoint[1]];
-        const c3 = [xAxisPoint[0] + 15, xAxisPoint[1] - 10];
-        const c4 = [shape.x + 15, shape.y - 10];
-        ctx
-          .moveTo(c1[0], c1[1])
-          .lineTo(c2[0], c2[1])
-          .lineTo(c3[0], c3[1])
-          .lineTo(c4[0], c4[1])
-          .closePath();
-      },
-    });
-    // 绘制顶面
-    const CubeTop = echarts.graphic.extendShape({
-      shape: {
-        x: 0,
-        y: 0,
-      },
-      buildPath: function (ctx: any, shape) {
-        const c1 = [shape.x + 7, shape.y];
-        const c2 = [shape.x + 15, shape.y - 10]; //右点
-        const c3 = [shape.x - 2, shape.y - 10];
-        const c4 = [shape.x - 10, shape.y];
-        ctx
-          .moveTo(c1[0], c1[1])
-          .lineTo(c2[0], c2[1])
-          .lineTo(c3[0], c3[1])
-          .lineTo(c4[0], c4[1])
-          .closePath();
-      },
-    });
-    // 注册三个面图形
-    echarts.graphic.registerShape('CubeLeft', CubeLeft);
-    echarts.graphic.registerShape('CubeRight', CubeRight);
-    echarts.graphic.registerShape('CubeTop', CubeTop);
+    if (!chartDom) {
+      return;
+    }
+
     const option = {
-      backgroundColor: 'rgb(2,35,75)',
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          type: 'shadow',
+        backgroundColor: 'rgba(0, 62, 127, 0.9)',
+        borderWidth: 0,
+        textStyle: {
+          color: 'white',
+          align: 'left',
         },
+        formatter: '{a0}: {c0}%<br />{a1}: {c1}%',
       },
       grid: {
         left: '0',
-        right: '5%',
-        top: '8%',
+        right: '0',
+        top: '20%',
         bottom: '0',
         containLabel: true,
       },
       legend: {
-        data: ['1', '2'],
-        show: true,
-      },
-      // x 坐标
-      xAxis: {
-        type: 'category',
-        data: xdata,
-        // 坐标线条
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color: 'rgba(255, 255, 255, 0.2)',
-          },
-        },
-        // 标志位
-        axisTick: {
-          show: false,
-          length: 9,
-          alignWithLabel: true,
-          lineStyle: {
-            color: '#7DFFFD',
-          },
-        },
-        // x 坐标的文字标注的颜色
-        axisLabel: {
-          fontSize: 12,
-          color: 'white',
+        data: ['搬迁安置', '生产安置'],
+        left: 20,
+        itemWidth: 10,
+        itemHeight: 5,
+        textStyle: {
+          color: 'rgba(255, 255, 255, 0.75)',
         },
       },
-      yAxis: {
-        type: 'value',
-        min: 0,
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color: 'rgba(255, 255, 255, 0.2)',
+      xAxis: [
+        {
+          type: 'category',
+          data: xdata,
+          axisLine: {
+            show: true,
+            lineStyle: {
+              border: 1,
+              color: 'rgba(255, 255, 255, 0.2)',
+            },
+          },
+          axisLabel: {
+            fontSize: 12,
+            color: 'white',
+          },
+          axisTick: {
+            show: false,
           },
         },
-        // 分割线
-        splitLine: {
-          show: true,
-          lineStyle: {
-            type: 'dashed',
-            color: '#075858',
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          axisLabel: {
+            formatter: '{value}%',
+          },
+          axisLine: {
+            show: true,
+            lineStyle: {
+              color: 'rgba(255, 255, 255, 0.2)',
+            },
+          },
+          splitLine: {
+            interval: '1',
+            lineStyle: {
+              type: 'dashed',
+              color: 'rgba(255, 255, 255, 0.1)',
+            },
           },
         },
-        axisLabel: {
-          fontSize: 12,
-          color: 'white',
-          formatter: '{value}%',
-        },
-        boundaryGap: ['20%', '20%'],
-      },
+      ],
       series: [
         {
-          type: 'custom',
-          name: '搬迁安置协议签订率',
-          renderItem: (params, api) => {
-            let cubeLeftStyle = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          name: '搬迁安置',
+          type: 'bar',
+          data: banqianData,
+          barWidth: 14,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#59A6DC',
+                color: '#29D1FD',
               },
               {
                 offset: 1,
-                color: '#2D52D7',
+                color: '#018AD7',
               },
-            ]);
-            let cubeRightStyle = new echarts.graphic.LinearGradient(
-              0,
-              0,
-              0,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: '#4EA4E0',
-                },
-                {
-                  offset: 1,
-                  color: '#2445B8',
-                },
-              ]
-            );
-            let cubeTopStyle = {
-              color: '#4E9CD3',
-            };
-            var location = api.coord([api.value(0), api.value(1)]);
-            location = [location[0] - 15, location[1]];
-            var location1 = api.coord([api.value(0), 0]);
-            location1 = [location1[0] - 15, location1[1]];
-            return {
-              type: 'group',
-              children: [
-                {
-                  type: 'CubeLeft',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeLeftStyle,
-                  },
-                },
-                {
-                  type: 'CubeRight',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeRightStyle,
-                  },
-                },
-                {
-                  type: 'CubeTop',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeTopStyle,
-                  },
-                },
-              ],
-            };
+            ]),
           },
-          data: banqianData,
         },
         {
-          type: 'custom',
-          name: '生产安置协议签订率',
-          renderItem: (params, api) => {
-            let cubeLeftStyle = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          name: '生产安置',
+          type: 'bar',
+          data: shengchanData,
+          barWidth: 14,
+          itemStyle: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
                 offset: 0,
-                color: '#0DF5D6',
+                color: '#FF2F89',
               },
               {
                 offset: 1,
-                color: '#019ABB ',
+                color: '#F79F2D',
               },
-            ]);
-            let cubeRightStyle = new echarts.graphic.LinearGradient(
-              0,
-              0,
-              0,
-              1,
-              [
-                {
-                  offset: 0,
-                  color: '#08E8C9',
-                },
-                {
-                  offset: 1,
-                  color: '#008CA9',
-                },
-              ]
-            );
-            let cubeTopStyle = {
-              color: '#0DEED4',
-            };
-            var location = api.coord([api.value(0), api.value(1)]);
-            location = [location[0] + 15, location[1]];
-            var location1 = api.coord([api.value(0), 0]);
-            location1 = [location1[0] + 15, location1[1]];
-            return {
-              type: 'group',
-              children: [
-                {
-                  type: 'CubeLeft',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeLeftStyle,
-                  },
-                },
-                {
-                  type: 'CubeRight',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeRightStyle,
-                  },
-                },
-                {
-                  type: 'CubeTop',
-                  shape: {
-                    api,
-                    xValue: api.value(0),
-                    yValue: api.value(1),
-                    x: location[0],
-                    y: location[1],
-                    xAxisPoint: location1,
-                  },
-                  style: {
-                    fill: cubeTopStyle,
-                  },
-                },
-              ],
-            };
+            ]),
           },
-          data: shengchanData,
         },
       ],
     };
@@ -317,31 +125,56 @@ const LBottom = () => {
     const myChart = echarts.init(chartDom);
 
     myChart.setOption(option);
-    window.addEventListener('resize', () => {
-      myChart?.resize();
-    });
+
     return myChart;
   };
   useEffect(() => {
-    let banqian = [10, 20, 40, 30, 50, 60];
-    let shengchan = [10, 20, 40, 30, 50, 60].reverse();
-    let xData = ['白鹤滩', '托巴', '乌东德', '溪洛渡', '向家坝', '小湾'];
-    createCharts(xData, banqian, shengchan, chartRef.current);
-  }, []);
-
+    const myChart = createCharts(
+      listData?.cityName,
+      listData?.relocationAgreementRate,
+      listData?.productionAgreementRate,
+      chartRef.current,
+    );
+    const resize = () => {
+      myChart?.resize();
+    };
+    window.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+    };
+  });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setActiveIndex((oldState) => {
+        return oldState === 2 ? 1 : (oldState += 1);
+      });
+    }, 8000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [activeIndex]);
   return (
     <Container
-      text='建设进度'
+      text="建设进度"
       right={
         <ul>
-          <li className='active'>协议签订率</li>
-          <li>安置完成率</li>
+          {['协议签订率', '安置完成率'].map((item, index) => (
+            <li
+              key={item}
+              onClick={() => {
+                setActiveIndex(index + 1);
+              }}
+              className={index === activeIndex - 1 ? 'active' : ''}
+            >
+              {item}
+            </li>
+          ))}
         </ul>
       }
     >
-      <div className='middle_content' ref={chartRef}></div>
+      <div className="middle_content" ref={chartRef}></div>
     </Container>
   );
-};
+});
 
 export default LBottom;

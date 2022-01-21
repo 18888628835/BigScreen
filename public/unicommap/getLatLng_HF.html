@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <script src="index/js/echarts.min.js"></script>
+    <script src="leaflet/leaflet.js"></script>
+    <link href="leaflet/leaflet.css" rel="stylesheet" />
+    <script src="leaflet/leaflet-src.js"></script>
+    <script src="leaflet/leaflet-omnivore.min.js"></script>
+    <script src="leaflet/leaflet-ant-path.js"></script>
+    <script src="jquery-1.10.2.js"></script>
+
+ <style>
+        #mapDiv {
+            /*必须指定高度*/
+            height: 950px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="mapDiv">
+    </div>
+
+    <!--脚本必须放在尾部-->
+    <script>
+        var _TiandituSLLabelPath = "http://t{s}.tianditu.gov.cn/cva_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cva&tileMatrixSet=c&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles&tk=b7abd507700e4f349a8c0118ccab43ac";
+        var _TiandituYXLabelPath = "http://t{s}.tianditu.gov.cn/cia_c/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=cia&STYLE=default&TILEMATRIXSET=c&FORMAT=tiles&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}&tk=b7abd507700e4f349a8c0118ccab43ac";
+        var _TiandituYXPath = "http://t{s}.tianditu.gov.cn/img_c/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=c&TileMatrix={z}&TileRow={y}&TileCol={x}&style=default&format=tiles&tk=b7abd507700e4f349a8c0118ccab43ac";
+        var path = location.origin;
+        map  = new L.map("mapDiv", {
+            minZoom: 1,
+            maxZoom: 17,
+            center:[25.070801, 101.623535],
+            zoom: 10,
+            zoomControl: false,
+            attributionControl: false,
+            crs:L.CRS.EPSG4326,
+            editable: true,
+            doubleClickZoom:false
+        });
+        var layer_poi = null;
+         $(document).ready(function () {
+        if(location.origin!="http://59.216.201.83"){
+        L.tileLayer(_TiandituYXPath, { subdomains: [1, 2, 3], minZoom: 5, maxZoom: 18, storagetype: 0 }).addTo(map);
+        L.tileLayer(_TiandituYXLabelPath, { subdomains: [1, 2, 3], minZoom: 5, maxZoom: 18, storagetype: 0 }).addTo(map);
+        }else{
+           L.tileLayer('http://117.26.22.125/gisx/sj_raster/v6/wmts/tile/1002001?ak=mf72ff9295c740ec0f37e61433e8a3ad8d&service=WMTS&request=GetTile&version=1.0.0&layer=&style=&tilematrixSet=GoogleMapsCompatible&transparent=1&width=256&height=256&opacity=1&srs=EPSG:4490&tilematrix={z}&tilerow={y}&tilecol={x}', {
+           attribution: '&copy; <a href="http://osm.org/copyright"></a> contributors'
+        }).addTo(map);
+         }
+         layer_poi = new L.LayerGroup().addTo(map);
+         map.on('click', onMapClick);
+        initLocalPOI(getUrlParam("X"),getUrlParam("Y"));
+     
+         });
+                //获取地址传值     
+        function getUrlParam(name) {
+                    console.log(window.location.search.substr(1).match(reg))
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+                    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+                    if (r != null) return unescape(r[2]); return null; //返回参数值 
+        }
+        var localPOI = null;
+        function   initLocalPOI(x,y){
+               if(x==""|y==""){  
+                SetRegionCode(getUrlParam("xzqh"));return;
+                }
+              if(localPOI==null){
+                localPOI = L.marker( [x, y], {
+                                      icon: L.icon({iconSize: [40, 40],iconAnchor: [20, 20],iconUrl: "img/iconHF.png",}),
+                                      attribution: "项目位置",
+                                      highlight: 'temporary'
+                                  }).addTo(map);
+                                  localPOI.bindTooltip("<div>项目位置</div>", { permanent: true, direction: 'left', offset: [-20, 0] }).openTooltip();
+                                  map.setView( [x, y], map.getZoom());
+              }else{
+                localPOI.setLatLng([x, y]);
+              }
+              window.parent.postMessage([x, y]);
+             }
+        var flag_edit = false;
+        function onMapClick(e) {
+            if(flag_edit){
+                var arr = e.latlng.toString().replace("LatLng(","").replace(")","").split(",");
+              initLocalPOI(arr[0],arr[1])
+            }
+        }
+        function setHFEdit(flag){
+            flag_edit = flag;
+        }
+        function clearPOI(){
+            map.removeLayer(localPOI);
+            localPOI = null;
+        }
+        function SetRegionCode(xzqh){
+          var xzqhID = xzqh.split(',')[xzqh.split(',').length-1];
+        
+    var href = window.location.href.split("/")[2]
+    var sql =  "PAC = '" + xzqhID + "'"
+        ,typeName = 'xatree:xzqh_yn' 
+        ,url = "https://web.skyimin.com/geoserver/xatree/ows/" 
+        ,cql = 'cql_filter=' + sql
+    //wfs服务：cql_filter和bbox这两个参数不能共存
+    var params={
+        service:'WFS',
+        version:'1.1.0',
+        request:'GetFeature',
+        typeName:typeName,
+        outputFormat:'application/json',
+        cql_filter:sql,
+        maxFeatures:"5000",
+    }
+    var u = url + getParamString(params, url)
+    console.log(u)
+    $.ajax({
+        url:u,
+        type:"get",
+        contentType: 'application/json',
+        success: function(res){
+            console.log(res,'wfs 条件查询')
+            var locationArr = []
+            var property = []
+            res.features.forEach((v,i)=>{
+                 if(v.geometry.type=="MultiPolygon"){
+                    var arr = []
+                    v.geometry.coordinates[0][0].forEach((value,index)=>{
+                        arr.push([value[1],value[0]])
+                    })
+                    locationArr.push([[arr]])
+                    property.push(v.properties)
+                    //console.log(v.geometry.coordinates,[[[arr]]])
+                } else{
+                    v.geometry.coordinates[0].forEach((value,index)=>{
+                        locationArr.push([value[1],value[0]])
+                    })
+                }
+                var total_X=0,total_Y=0;
+                for(var a=0;a<locationArr[0][0][0].length;a++){
+                    total_X=total_X+locationArr[0][0][0][a][0];
+                    total_Y=total_Y+locationArr[0][0][0][a][1];
+                }
+                var total_center = [total_X/locationArr[0][0][0].length,total_Y/locationArr[0][0][0].length];
+                map.setView(total_center, 11);
+            })
+         
+        },
+        error:function(err){
+            console.log(err,'错误');    
+        }
+    })
+        }
+        function getParamString(obj, existingUrl, uppercase) {
+	var params = [];
+	for (var i in obj) {
+		params.push(encodeURIComponent(uppercase ? i.toUpperCase() : i) + '=' + encodeURIComponent(obj[i]));
+	}
+	return ((!existingUrl || existingUrl.indexOf('?') === -1) ? '?' : '&') + params.join('&');
+}
+    </script>
+
+</body>
+
+</html>
